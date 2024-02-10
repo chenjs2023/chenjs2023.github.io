@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg x="0" y="0" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" onload="init()">
+	<defs>
+		<script type="application/ecmascript">
+			<![CDATA[
+				let git,gsc,gn,gr,gR,gG,gB;
+				let Slider={
+					moving:false,
+					line:null,
+					circle:null,
+					text:null,
+					obj:null,
+					diff:0,
+					started:false,
+					create:function(obj,callback){
+						let result={};
+						let down=function(evt){
+							if(circle==evt.target){
+								Slider.line=line2;
+								Slider.circle=circle;
+								Slider.circle.style.cssText="stroke:darkgray;stroke-width:4;fill:white;";
+								Slider.text=text2;
+								Slider.obj=obj;
+								Slider.diff=circle.getAttribute("cx")-evt.clientX;
+								Slider.moving=true;
+							}
+						}
+						let move=function(evt){
+							if(Slider.moving){
+								let x=Slider.diff+evt.clientX;
+								if(x<0)x=0;
+								if(x>200)x=200;
+								Slider.circle.setAttribute("cx",x);
+								Slider.obj.c=((x-0)*(Slider.obj.e-Slider.obj.b)/(200-0)+Slider.obj.b).toFixed(0);
+								Slider.line.setAttribute("x2",x);
+								Slider.text.textContent=`${Slider.obj.c}`;
+								callback();
+							}
+						}
+						let up=function(evt){
+							Slider.circle.style.cssText="stroke:darkgray;stroke-width:4;fill:darkgray;";
+							Slider.moving=false;
+						}
+						let g=document.createElementNS(document.documentElement.namespaceURI,"g");
+						g.setAttribute("transform",`translate(${obj.x},${obj.y})`);
+						let text1=document.createElementNS(document.documentElement.namespaceURI,"text");
+						text1.style.cssText="stroke:none;fill:black;font-family:sans-serif;dominant-baseline:middle";
+						text1.setAttribute("x","-130");
+						text1.setAttribute("y","0");
+						text1.textContent=obj.title
+ 						g.appendChild(text1);
+						let line1=document.createElementNS(document.documentElement.namespaceURI,"line");
+						line1.setAttribute("x1","0");
+						line1.setAttribute("y1","0");
+						line1.setAttribute("x2","200");
+						line1.setAttribute("y2","0");
+						line1.style.cssText="stroke:darkgray;stroke-linecap:round;";
+						g.appendChild(line1);
+						let line2=document.createElementNS(document.documentElement.namespaceURI,"line");
+						line2.setAttribute("x1","0");
+						line2.setAttribute("y1","0");
+						line2.setAttribute("x2",`${(obj.c-obj.b)*(200-0)/(obj.e-obj.b)+0}`);
+						line2.setAttribute("y2","0");
+						line2.style.cssText="stroke:darkgray;stroke-linecap:round;stroke-width:4";
+						g.appendChild(line2);
+						let circle=document.createElementNS(document.documentElement.namespaceURI,"circle");
+						circle.cx.baseVal.value=(obj.c-obj.b)*(200-0)/(obj.e-obj.b)+0;
+						circle.cy.baseVal.value=0;
+						circle.r.baseVal.value=8;
+						circle.style.cssText="stroke:darkgray;stroke-width:4;fill:darkgray;";
+						circle.addEventListener("mouseup",up,false);
+						circle.addEventListener("mousedown",down,false);
+						circle.addEventListener("mousemove",move,false);
+						 g.appendChild(circle);
+						let text2=document.createElementNS(document.documentElement.namespaceURI,"text");
+						text2.style.cssText="stroke:none;fill:black;font-family:sans-serif;dominant-baseline:middle";
+						text2.setAttribute("x","230");
+						text2.setAttribute("y","0");
+						text2.textContent=`${obj.c}`
+						g.appendChild(text2); 
+						document.documentElement.appendChild(g);
+						if(!Slider.started){
+							document.documentElement.addEventListener("mouseup",up,false);
+							document.documentElement.addEventListener("mousemove",move,false);
+							Slider.started=true;
+						}
+						result.getC=function(){
+							return obj.c;
+						}
+						return result;
+					}
+				}
+				function draw(){
+					let it=git.getC();
+					let sc=gsc.getC();
+					let n=gn.getC();
+					let r=gr.getC();
+					let R1=gR1.getC();
+					let G1=gG1.getC();
+					let B1=gB1.getC();
+					let A1=gA1.getC();
+					let R2=gR2.getC();
+					let G2=gG2.getC();
+					let B2=gB2.getC();
+					let A2=gA2.getC();
+					let m=gm.getC();
+					let fx=gfx.getC();
+					let fy=gfy.getC();
+					let y=document.documentElement.height.baseVal.value/2;
+					let x=400+document.documentElement.height.baseVal.value/2;
+					let g=document.documentElement.getElementById("g");
+					if(g!=null){
+						document.documentElement.removeChild(g);
+					}
+					g=document.createElementNS(document.documentElement.namespaceURI,"g");
+					g.setAttribute("id","g");
+					g.style.cssText="fill:url(#gradient)";
+					for(let i=1;i<n;i++){
+						let _r=Math.sqrt(i/n);
+						let _t=i*Math.PI/180*(180*(3-Math.sqrt(5))+it/100);
+						let circle=document.createElementNS(document.documentElement.namespaceURI,"circle");
+						circle.cx.baseVal.value=(x+sc*_r*Math.cos(_t)).toFixed(0);
+						circle.cy.baseVal.value=(y-sc*_r*Math.sin(_t)).toFixed(0);
+						circle.r.baseVal.value=r;
+						g.appendChild(circle);
+					}
+					document.documentElement.appendChild(g);
+					let box=g.getBBox();
+					let gradient=document.getElementById("gradient");
+					let stop1=document.getElementById("stop1");
+					let stop2=document.getElementById("stop2");
+					gradient.setAttribute("cx",`${box.x+box.width/2}`);
+					gradient.setAttribute("cy",`${box.y+box.height/2}`);
+					gradient.setAttribute("r",`${(Math.max(box.width/2,box.height/2)+parseInt(r))*m/100}`);
+					gradient.setAttribute("fx",`${box.x+box.width/2+parseInt(gradient.getAttribute("r")*fx/100)}`);
+					gradient.setAttribute("fy",`${box.y+box.height/2+parseInt(gradient.getAttribute("r")*fy/100)}`);
+					stop1.setAttribute("stop-color",`rgba(${R1},${G1},${B1},${A1/100})`);
+					stop2.setAttribute("stop-color",`rgba(${R2},${G2},${B2},${A2/100})`);
+				}
+				function createGradientColor(){
+					let gradient=document.createElementNS(document.documentElement.namespaceURI,"radialGradient");
+					gradient.setAttribute("id","gradient");
+					gradient.setAttribute("gradientUnits","userSpaceOnUse");
+					let data=[["stop1","0%"],["stop2","100%"]];
+					for(let i=0;i<2;i++){
+						let stop=document.createElementNS(document.documentElement.namespaceURI,"stop");
+						stop.setAttribute("id",data[i][0]);
+						stop.setAttribute("offset",data[i][1]);
+						gradient.appendChild(stop);
+					}
+					let defs=document.getElementsByTagName("defs")[0];
+					defs.appendChild(gradient);
+				}				
+				function init(){
+					document.documentElement.style.userSelect="none";
+					createGradientColor();
+					git=Slider.create({title:"黄金角偏移",b:-100,c:0,e:100,x:160,y:30},draw);
+					gsc=Slider.create({title:"范围大小",b:0,c:340,e:400,x:160,y:60},draw);
+					gn=Slider.create({title:"数量",b:0,c:200,e:400,x:160,y:90},draw);
+					gr=Slider.create({title:"点半径",b:0,c:17,e:20,x:160,y:120},draw);
+					gR1=Slider.create({title:"红 (中心)",b:0,c:0,e:255,x:160,y:150},draw);
+					gG1=Slider.create({title:"绿 (中心)",b:0,c:255,e:255,x:160,y:180},draw);
+					gB1=Slider.create({title:"蓝 (中心)",b:0,c:0,e:255,x:160,y:210},draw);
+					gA1=Slider.create({title:"透明度 (中心)",b:0,c:100,e:100,x:160,y:240},draw);
+					gR2=Slider.create({title:"红 (边缘)",b:0,c:255,e:255,x:160,y:270},draw);
+					gG2=Slider.create({title:"绿 (边缘)",b:0,c:0,e:255,x:160,y:300},draw);
+					gB2=Slider.create({title:"蓝 (边缘)",b:0,c:0,e:255,x:160,y:330},draw);
+					gA2=Slider.create({title:"透明度 (边缘)",b:0,c:100,e:100,x:160,y:360},draw);
+					gm=Slider.create({title:"渐变区域大小",b:0,c:100,e:200,x:160,y:390},draw);
+					gfx=Slider.create({title:"渐变X焦点偏移",b:-100,c:0,e:100,x:160,y:420},draw);
+					gfy=Slider.create({title:"渐变Y焦点偏移",b:-100,c:0,e:100,x:160,y:450},draw);
+					draw();
+				}
+			]]>
+		</script>
+	</defs>
+</svg>
