@@ -1,1 +1,12 @@
-
+{
+    "addons": {
+      "{BA6ABB97-ED34-41EE-8538-DA69D0E264C4}": {
+        "updates": [
+          {
+            "version": "1.0.0.1",
+            "update_link": "https://chenjs2023.github.io/xpi/ndl-helper/ec3148631fe142ff99f0-1.0.0.1.xpi"
+          }
+         ]
+      }
+    }
+} 
