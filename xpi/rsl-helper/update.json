@@ -7,8 +7,12 @@
           "update_link": "https://chenjs2023.github.io/xpi/rsl-helper/78840b10ec66471884fb-1.0.0.1.xpi"
         },
         {
-          "version": "1.0.0.1",
+          "version": "1.0.0.2",
           "update_link": "https://chenjs2023.github.io/xpi/rsl-helper/78840b10ec66471884fb-1.0.0.2.xpi"
+        },
+        {
+          "version": "1.0.0.3",
+          "update_link": "https://chenjs2023.github.io/xpi/rsl-helper/78840b10ec66471884fb-1.0.0.3.xpi"
         }
       ]
     }
