@@ -1,1 +1,12 @@
-
+{
+  "addons": {
+    "{575be682-8ee9-44bd-9e6c-086174d72109}": {
+      "updates": [
+        {
+          "version": "1.0.0.5",
+          "update_link": "https://chenjs2023.github.io/xpi/amazon-helper/cd5e4e43c58f46e280d3-1.0.0.5.xpi"
+        }
+      ]
+    }
+  }
+}
