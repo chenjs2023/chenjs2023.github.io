@@ -1,1 +1,12 @@
-
+{
+    "addons": {
+      "{6165877F-5C12-4EAB-BE99-87CAF1A87D7F}": {
+        "updates": [
+          {
+            "version": "1.0.0.1",
+            "update_link": "https://chenjs2023.github.io/xpi/nlc-helper/52e1fc8334004674a2e4-1.0.0.1.xpi"
+          }
+         ]
+      }
+    }
+} 
