@@ -1,1 +1,12 @@
-
+{
+  "addons": {
+    "{8E231285-85E3-4D97-82A8-94B2332E0F0D}": {
+      "updates": [
+        {
+          "version": "1.0.0.1",
+          "update_link": "https://chenjs2023.github.io/xpi/block-test/b470cd7dcd7e44a1a569-1.0.0.1.xpi"
+        }
+      ]
+    }
+  }
+}
